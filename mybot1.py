@@ -41,6 +41,7 @@ def download_audio(message):
             'outtmpl': 'audio.%(ext)s',
             'noplaylist': True,
             'quiet': True,
+            'cookiefile': 'cookies.txt',
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
