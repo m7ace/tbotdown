@@ -41,7 +41,6 @@ def download_audio(message):
             'outtmpl': 'audio.%(ext)s',
             'noplaylist': True,
             'quiet': True,
-            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
         }
         
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
