@@ -63,6 +63,6 @@ def download_audio(message):
         bot.edit_message_text(f"❌ حدث خطأ: {str(e)}", message.chat.id, msg.message_id)
 
 # 3. التشغيل
-if name == '__main__':
+if __name__ == '__main__':
     keep_alive()
     bot.infinity_polling()
