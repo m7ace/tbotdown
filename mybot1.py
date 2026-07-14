@@ -5,7 +5,7 @@ from flask import Flask
 from threading import Thread
 
 # 1. إعداد السيرفر الوهمي لضمان بقاء البوت نشطاً
-app = Flask(__name__)
+app = Flask(__name__) # تم التصحيح هنا
 
 @app.route('/')
 def home():
@@ -19,7 +19,6 @@ def keep_alive():
     t.start()
 
 # 2. إعداد البوت
-# سنقوم بسحب التوكن من الإعدادات السرية في Railway لاحقاً
 TOKEN = os.environ.get("TOKEN")
 bot = telebot.TeleBot(TOKEN)
 
@@ -30,7 +29,6 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: True)
 def download_audio(message):
     url = message.text
-    # التأكد من أن الرابط ليس قائمة تشغيل لتجنب الحظر
     if "list=" in url:
         bot.reply_to(message, "⚠️ يرجى إرسال رابط فيديو واحد فقط (بدون قائمة تشغيل).")
         return
@@ -43,26 +41,30 @@ def download_audio(message):
             'outtmpl': 'audio.%(ext)s',
             'noplaylist': True,
             'quiet': True,
+            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}],
         }
-
+        
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
-            filename = ydl.prepare_filename(info).rsplit('.', 1)[0] + '.mp3'
-
+            filename = ydl.prepare_filename(info)
+            base, ext = os.path.splitext(filename)
+            mp3_file = base + '.mp3'
+            
         bot.edit_message_text("✅ تم التحويل، جاري الإرسال...", message.chat.id, msg.message_id)
         
-        with open(filename, 'rb') as audio:
+        with open(mp3_file, 'rb') as audio:
             bot.send_audio(message.chat.id, audio)
-
+        
         bot.delete_message(message.chat.id, msg.message_id)
         
-        if os.path.exists(filename):
-            os.remove(filename)
+        if os.path.exists(mp3_file):
+            os.remove(mp3_file)
 
     except Exception as e:
         bot.edit_message_text(f"❌ حدث خطأ: {str(e)}", message.chat.id, msg.message_id)
 
 # 3. التشغيل
-if __name__ == '__main__':
+if __name__ == '__main__': # تم التصحيح هنا
     keep_alive()
     bot.infinity_polling()
+
