@@ -44,10 +44,11 @@ def youtube_info(message):
 
     bot.reply_to(message, "🔍 جاري قراءة معلومات الفيديو...")
 
-    ydl_opts = {
-        "quiet": True,
-        "skip_download": True
-    }
+  ydl_opts = {
+    "quiet": True,
+    "skip_download": True,
+    "cookiefile": "cookies.txt"
+}
 
     try:
 
