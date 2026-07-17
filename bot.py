@@ -80,5 +80,14 @@ def youtube_info(message):
         bot.reply_to(message, f"❌ حدث خطأ:\n{e}")
 
 print("Bot Started...")
+bot.remove_webhook()
+
+print("Bot Started...")
+
+bot.infinity_polling(
+    skip_pending=True,
+    timeout=30,
+    long_polling_timeout=30
+)
 
 bot.infinity_polling(skip_pending=True)
