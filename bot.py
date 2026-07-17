@@ -46,8 +46,9 @@ def youtube_info(message):
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(message.text, download=False)
+            url = message.text.split("&")[0]
 
+            info = ydl.extract_info(url, download=False)
         title = info.get("title", "Unknown")
         duration = info.get("duration", 0)
         thumbnail = info.get("thumbnail")
