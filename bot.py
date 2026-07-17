@@ -38,7 +38,7 @@ def youtube_info(message):
     bot.reply_to(message, "🔍 جاري قراءة معلومات الفيديو...")
 
     ydl_opts = {
-        "format": "best",
+        "format": "bv*+ba/b",
         "outtmpl": "downloads/%(title)s.%(ext)s",
         "cookiefile": "cookies.txt",
         "noplaylist": True,
