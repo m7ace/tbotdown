@@ -44,17 +44,15 @@ def youtube_info(message):
 
     bot.reply_to(message, "🔍 جاري قراءة معلومات الفيديو...")
 
-ydl_opts = {
-    "format": "best",
-    "outtmpl": "downloads/%(title)s.%(ext)s",
-    "cookiefile": "cookies.txt",
-    "noplaylist": True,
-}
+    ydl_opts = {
+        "format": "best",
+        "outtmpl": "downloads/%(title)s.%(ext)s",
+        "cookiefile": "cookies.txt",
+        "noplaylist": True,
+    }
 
     try:
-
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-
             info = ydl.extract_info(message.text, download=False)
 
         title = info.get("title", "Unknown")
