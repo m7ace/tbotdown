@@ -3,6 +3,7 @@ from telebot import types
 from config import TOKEN, BOT_NAME
 import yt_dlp
 import os
+from keyboards.menu import main_menu
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -11,18 +12,7 @@ os.makedirs("downloads", exist_ok=True)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-
-    btn1 = types.KeyboardButton("📹 فيديو")
-    btn2 = types.KeyboardButton("🎵 صوت")
-    btn3 = types.KeyboardButton("⚙️ الإعدادات")
-    btn4 = types.KeyboardButton("🌍 اللغة")
-    btn5 = types.KeyboardButton("⭐ Premium")
-    btn6 = types.KeyboardButton("📢 القناة")
-
-    markup.add(btn1, btn2)
-    markup.add(btn3, btn4)
-    markup.add(btn5, btn6)
+    markup = main_menu()
 
     text = f"""
 🎬 أهلاً بك في {BOT_NAME}
