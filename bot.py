@@ -2,8 +2,11 @@ import telebot
 from telebot import types
 from config import TOKEN, BOT_NAME
 import yt_dlp
+import os
 
 bot = telebot.TeleBot(TOKEN)
+
+os.makedirs("downloads", exist_ok=True)
 
 
 @bot.message_handler(commands=['start'])
